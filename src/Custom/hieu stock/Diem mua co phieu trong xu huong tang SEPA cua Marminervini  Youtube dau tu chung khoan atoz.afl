@@ -1,0 +1,88 @@
+_SECTION_BEGIN("Diem mua co phieu trong xu huong tang SEPA cua Marminervini  Youtube dau tu chung khoan atoz");
+//Youtube: Dau tu chung khoan atoz
+//Link down: https://youtu.be/i0XZwLP5P_w
+//Chuc cac ban suc khoe hanh phuc dau tu thanh cong
+//Tam niem: Cho di la con mai
+
+//Chon diem mua co phieu theo phuong phap SEPA cua Phu thuy Marminervini
+MA5 = MA (C,5);
+MA10 = MA (C,10);
+MA50 = MA (C,50);
+MA150 = MA (C, 150);
+MA200 = MA (C,200);
+
+DK1 = MA150 > MA200;
+DK2 = MA50 > MA150;
+//DK3 = MA10 > MA50;
+
+// Xu huong tang
+DK4 = DK1 AND DK2;// AND DK3;
+
+// Gia cat len MA50
+DK5 = Cross (C, MA50);
+
+// Gia cat len MA10
+DK6 = Cross (C, MA10);
+// Gia cat len MA5
+DK7 = Cross (C, MA5);
+//Gia cat len MA5 hoac MA10 hoac 50
+DK8 = DK5 OR DK6 OR DK7;
+// Gia tri giao dich
+GTGD = C*V;
+// Gia tri giao dich > 5 ty
+DK9 = GTGD>5000000;
+//Khoi luong > 1.5Vol MA50
+VolMA50 = 1.1*MA(V, 50);
+DK10 = V > VolMA50;
+
+Buy = DK4 AND DK8 AND DK9 AND DK10;
+PlotShapes(shapeUpArrow*BUY,ParamColor("UpArrow",10),0,L); 
+
+Filter = Buy;
+
+GfxSetOverlayMode(1);
+GfxSelectFont("Tahoma", Status("pxheight")/14 );
+GfxSetTextAlign(6 );// center alignment
+GfxSetTextColor( ParamColor( "Warna", colorLightGrey ) );
+GfxSetBkMode(0); // transparent
+GfxTextOut( "Youtube: Dau Tu Chung Khoan atoz", Status("pxwidth")/2, Status("pxheight")/20 );
+AddColumn(BUY,"BUY");
+AddColumn(((C - Ref(C,-1))/Ref(C,-1))*100 ,"%Tanggia ");
+AddColumn ((((V-MA(V,50))/MA(V,50))*100)+100, "*%VOL-MA50");
+AddColumn(Volume,"Volht");
+AddColumn(C,"Giatoday");
+AddColumn(C*V,"GiatriGD ");
+
+_SECTION_BEGIN("Price");
+SetChartOptions(0,chartShowArrows|chartShowDates);
+_N(Title = StrFormat("{{NAME}} - {{INTERVAL}} {{DATE}} Open %g, Hi %g, Lo %g, Close %g (%.1f%%) Vol " +WriteVal( V, 1.0 ) +" {{VALUES}}", O, H, L, C, SelectedValue( ROC( C, 1 )) ));
+Plot( C, "Close", ParamColor("Color", colorCustom12 ), styleNoTitle | ParamStyle("Style") | GetPriceStyle() ); 
+_SECTION_END();
+
+_SECTION_END();
+
+_SECTION_BEGIN("MA5");
+
+Plot( MA( C, 5 ), _DEFAULT_NAME(), ParamColor( "Color", colorcustom12 ), ParamStyle("Style") ); 
+_SECTION_END();
+
+_SECTION_BEGIN("MA10");
+
+Plot( MA( C, 10 ), _DEFAULT_NAME(), ParamColor( "Color", colorcustom6 ), ParamStyle("Style") ); 
+_SECTION_END();
+
+
+_SECTION_BEGIN("MA50");
+
+Plot( MA( C, 50 ), _DEFAULT_NAME(), ParamColor( "Color", colorcustom8 ), ParamStyle("Style") ); 
+_SECTION_END();
+
+_SECTION_BEGIN("MA150");
+Plot( MA( C, 150 ), _DEFAULT_NAME(), ParamColor( "Color", colorBrown ), ParamStyle("Style") ); 
+_SECTION_END();
+
+_SECTION_BEGIN("MA200");
+Plot( MA( C, 200 ), _DEFAULT_NAME(), ParamColor( "Color", colorcustom5 ), ParamStyle("Style") ); 
+_SECTION_END();
+
+Plot(C,"",colorWhite,styleNoLabel,Null,Null,-26); // delayed,lagging, OR chikou span

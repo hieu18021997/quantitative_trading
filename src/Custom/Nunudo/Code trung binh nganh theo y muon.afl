@@ -1,0 +1,26 @@
+_SECTION_BEGIN("Gia trung binh nganhang");
+nganhang=ParamStr("ngan hang","ACB,EIB,MBB,NVB,SHB,STB,VCB,VIB,BID,CTG,SHB,LPB");
+No=0;
+price=0;
+for( i = 0; ( symbank = StrExtract(nganhang, i ) ) != ""; i++ )
+{
+price+=Foreign(symbank,"Close");//gia bank
+numbank=1+StrCount(nganhang,",");//so luong ma
+trungbinhbank=price/numbank;//gia trung binh bank
+thaydoi = ROC(trungbinhbank,1);
+No++;
+}
+Plot(trungbinhbank,"",IIf(trungbinhbank>Ref(trungbinhbank,-1),colorCustom9,colorRed),styleThick);
+_SECTION_END();
+/*
+_SECTION_BEGIN("Vol trung binh ngan hang");
+Volnganhang=0;
+for( i = 0; ( volbank = StrExtract(nganhang, i ) ) != ""; i++ )
+{
+Volnganhang+=Foreign(volbank,"Volume");//Vol bank
+numbank=1+StrCount(nganhang,",");//so luong ma
+trungbinhvolbank=Volnganhang/numbank;//vol trung binh bank
+No++;
+}
+//Plot(trungbinhvolbank,"",IIf(trungbinhvolbank>Ref(trungbinhvolbank,-1),colorCustom9,colorRed),styleThick);
+_SECTION_END();

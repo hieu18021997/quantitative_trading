@@ -1,0 +1,70 @@
+Buy = Cross(MA(C,10),MA(C,20));
+AddColumn(Buy, "Mua" , 1);
+Filter = 1;
+_SECTION_BEGIN("Telegram Alerts");
+TelegramAlerts = ParamTrigger("Telegram Alert","Send Alert");
+TelegramAPI_ID = ParamStr("Telegram Bot API Key","1746949192:AAGuQk_k348f0ncxxxxxxxxxxxxxxxxx");  //Get the Bot API key via BotFather in Telgram
+TelgramCHAT_ID = ParamStr("Telegram Channel ID","@testxxxxxxxxxxxxxxxx"); //Channel ID example : @marketcalls_in
+EnableScript("VBScript"); 
+<% 
+Public Sub Telegram(Message_Text)
+sAPI_ID = AFL.Var("TelegramAPI_ID")
+sChat_ID = AFL.Var("TelgramCHAT_ID")
+sMSG = Message_Text
+
+'URL to open....
+sUrl = "https://api.telegram.org/bot" & sAPI_ID & "/sendMessage"
+'POST Request to send.
+sRequest = "text=" & sMSG & "&chat_id=" & sChat_ID
+
+set oHTTP = CreateObject("Microsoft.XMLHTTP")
+oHTTP.open "POST", sUrl,false
+oHTTP.setRequestHeader "Content-Type", "application/x-www-form-urlencoded"
+oHTTP.setRequestHeader "Content-Length", Len(sRequest)
+oHTTP.send sRequest
+HTTPPost = oHTTP.responseText
+
+'Store response 
+'msgbox(objXmlHttpMain.responseText)
+'response.Write (objXmlHttpMain.responseText) 
+End Sub 
+
+%> 
+tg = GetScriptObject(); 
+if (LastValue(ValueWhen(Buy,BarIndex())==BarIndex()) AND StaticVarGet(Name()+GetChartID()+"buyAlert")==0 )
+{
+tg.Telegram("#" + Name() + " Ngày " + Date() + " Tu Dstock" + " Robotchungkhoan.nududo.com"
++ "\n" + " Tin hieu mua: Manh" 
++ "\n" + " Gia mua: " + BuyPrice
++ "\n" + " Target 1: " + 1.07*BuyPrice
++ "\n" + " Target 2: " + 1.15*BuyPrice
++ "\n" + " Target 3: " + 1.2*BuyPrice
++ "\n" + " Cat lo 3: " + 0.93*BuyPrice
++ "\n" + " RSI: " + RSI(14)
++ "\n" + " MFI: " + MFI(14)
++ "\n" + " % Gia thay doi: " + (100*(C - Ref(C,-1)))/(Ref(C,-1)));
+StaticVarSet(Name()+ GetChartID() + "buyAlertBar", LastValue(TimeNum()));
+}
+if (LastValue(TimeNum()) == StaticVarGet(Name()+GetChartID()+"buyAlertBar"))
+StaticVarSet(Name()+GetChartID()+"buyAlert",1); //alert was triggered, no more alerts on this bar
+else
+StaticVarSet(Name()+GetChartID()+"buyAlert",0); // new bar formed, and alerts can be trigered.
+/*
+if((Buy[BarCount-1]==True AND (Status("action") == actionExplore OR StaticVarGet(Name()+GetChartID()+"TGCLongEntry")==0)) OR TelegramAlerts)
+{
+tg.Telegram("#" + Name() + " Ngày " + Date() + " Tu Dstock" + " Robotchungkhoan.nududo.com"
++ "\n" + " Tin hieu mua: Manh" 
++ "\n" + " Gia mua: " + BuyPrice
++ "\n" + " Target 1: " + 1.07*BuyPrice
++ "\n" + " Target 2: " + 1.15*BuyPrice
++ "\n" + " Target 3: " + 1.2*BuyPrice
++ "\n" + " Cat lo 3: " + 0.93*BuyPrice
++ "\n" + " RSI: " + RSI(14)
++ "\n" + " MFI: " + MFI(14)
+
++ "\n" + " % Gia thay doi: " + (100*(C - Ref(C,-1)))/(Ref(C,-1)));
+}
+_SECTION_END();
+*/
+
+

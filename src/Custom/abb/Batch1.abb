@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<AmiBroker-Batch CompactMode="0">
+<Step>
+<Action>Explore</Action>
+<Param>C:\\Users\\HIEU1997\\Documents\\AmiBroker\\Formulas\\Custom\\hieu stock\\Base.afl</Param>
+</Step>
+<Step>
+<Action>Export</Action>
+<Param>C:\\Users\\HIEU1997\\Downloads\\data2.csv</Param>
+</Step>
+</AmiBroker-Batch>

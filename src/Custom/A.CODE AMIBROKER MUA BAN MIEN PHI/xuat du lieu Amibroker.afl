@@ -1,0 +1,34 @@
+Filter=1; 
+ 
+AddColumn(O,"Open"); 
+AddColumn(H,"High"); 
+AddColumn(L,"Low"); 
+AddColumn(C,"Close"); 
+AddColumn(V,"Volume",1.0); 
+AddColumn(OI,"Open Interest",1.0); 
+ 
+fname = "c:\\Dulieuxuatra\\" +  Name() + ".csv";
+fh = fopen( fname, "w" );
+if( fh ) 
+{ 
+  dt = DateTime();
+  for( i = 0; i < BarCount; i++ )
+  {
+    line = DateTimeToStr( dt[ i ] ) + "," +
+           Open[ i ] + "," +
+           High[ i ] + "," +
+           Low[ i ] + "," +
+           Close[ i ] + "," +
+           Volume[ i ] + "," +
+           OI[ i ] + "\n";
+           
+    fputs( line, fh );
+  }
+ 
+  fclose( fh );
+} 
+else 
+{ 
+   Error("ERROR: file can not be open"); 
+} 
+ 

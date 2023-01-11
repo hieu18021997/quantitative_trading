@@ -1,0 +1,177 @@
+LOAINGANHHANG  = ParamList("NGANH","BANBUON,BAOHIEM,BATDONGSAN",0);///CAU TRUC RE NHANH
+switch(LOAINGANHHANG)
+{
+//ban buon
+case "BANBUON":
+BANBUON=ParamStr("BANBUON","AAT,AAV,ABS,AMV,ARM,CKV,CLM,CMC,CVN,DBT,DGW,DXV,FID,GMA,HAI,HAT,HHS,HMC,HTL,JVC,KDM,KLF,KMT,MCF,MEL,PCT,PET,PIT,PLX,PMG,PPY,PSC,PSD,PSE,PSH,PTB,QBS,SGT,SHN,SMA,SMC,SRA,ST8,TDG,THS,TLH,TNA,TNI,TSC,TTB,TTH,UNI,VFG,VID,VKC,VMD,VPG,VTV");
+_SECTION_BEGIN("BANBUON");
+No=0;
+icloseBANBUON=0;
+iopenBANBUON=0;
+ihightBANBUON=0;
+ilowBANBUON = 0;
+ichangeBANBUON=0;
+ivolBANBUON=0;
+for( i = 0; ( symBANBUON = StrExtract(BANBUON,i ) ) != ""; i++ )
+{
+icloseBANBUON+=Foreign(symBANBUON,"Close");
+iopenBANBUON+=Foreign(symBANBUON,"Open");
+ihightBANBUON+=Foreign(symBANBUON,"Hight");
+ilowBANBUON+=Foreign(symBANBUON,"Low");
+ivolBANBUON+=Foreign(symBANBUON,"Volume");
+numBANBUON=1+StrCount(BANBUON,",");
+
+tbBANBUON=icloseBANBUON/numBANBUON;//gia dong cua trung binh ban buon
+tbopenBANBUON=iopenBANBUON/numBANBUON;// gia mo cua trung binh
+tbHightBANBUON=ihightBANBUON/numBANBUON;// gia dong cua trung binh
+tblowBANBUON=ilowBANBUON/numBANBUON;//gia thap trung binh
+tbvolBANBUON=ivolBANBUON/numBANBUON;//khoi luong trung binh
+
+tangBANBUON = Prec(ROC(tbBANBUON,1),3);
+tangdiemBANBUON = Prec(tbBANBUON - Ref(tbBANBUON,-1),3);
+tangvolBANBUON = Prec( ROC(tbvolBANBUON,1),3);
+ichangeBANBUON+=ROC(Foreign(symBANBUON,"Close"),1)/numBANBUON;
+No++;
+}
+_SECTION_END();
+TypeofPrice  = ParamList("Loai duong gia","Candle Stick,Bar Chart",0);
+switch(TypeofPrice)
+{
+   case "Candle Stick":
+PlotOHLC(tbopenBANBUON,tbHightBANBUON,tblowBANBUON,tbBANBUON,"",IIf(tbBANBUON>Ref(tbBANBUON,-1),colorCustom9,colorRed),styleCandle);
+      break; 
+   case "Bar Chart":
+		PlotOHLC(Null,tbHightBANBUON,tblowBANBUON,tbBANBUON,"",IIf(tbBANBUON>Ref(tbBANBUON,-1),colorCustom9,colorRed),styleBar);
+      break;
+      }
+_SECTION_BEGIN("Khoi Luong Trung Binh");
+messageboard = ParamToggle("Tat/mo Khoi luong TB","Hien|An",1);
+if (messageboard == 1 )
+{
+HPercent = Param("CHIEU CAO VOL", 10, 1, 100, 1);
+MAV = MA(tbvolBANBUON, Param("DUONG MAv", 20, 1, 100, 1));
+Vmax =  HighestVisibleValue(tbvolBANBUON)*100/HPercent;
+Vmin = LowestVisibleValue(tbvolBANBUON);
+Plot(tbvolBANBUON, "Volume", IIf( tbBANBUON > Ref(tbBANBUON,-1), ParamColor("Up Color", colorGreen ), ParamColor("Down Color", colorRed )), styleHistogram|styleOwnScale, Vmin, Vmax, 0, 0, 2);
+Plot(MAV, "MAV", colorWhite, styleLine|styleOwnScale, Vmin, Vmax, 0, 0, 2);
+}
+_SECTION_END();
+break;
+///ket thuc ban buon
+//bat dau bh
+case "BAOHIEM":
+BAOHIEM=ParamStr("BAOHIEM","BIC,BMI,BVH,MIG,PGI,PRE,PTI,PVI,VNR");
+_SECTION_BEGIN("BAOHIEM");
+No=0;
+icloseBAOHIEM=0;
+iopenBAOHIEM=0;
+ihightBAOHIEM=0;
+ilowBAOHIEM = 0;
+ichangeBAOHIEM=0;
+ivolBAOHIEM=0;
+for( i = 0; ( symBAOHIEM = StrExtract(BAOHIEM,i ) ) != ""; i++ )
+{
+icloseBAOHIEM+=Foreign(symBAOHIEM,"Close");
+iopenBAOHIEM+=Foreign(symBAOHIEM,"Open");
+ihightBAOHIEM+=Foreign(symBAOHIEM,"Hight");
+ilowBAOHIEM+=Foreign(symBAOHIEM,"Low");
+ivolBAOHIEM+=Foreign(symBAOHIEM,"Volume");
+numBAOHIEM=1+StrCount(BAOHIEM,",");
+
+tbBAOHIEM=icloseBAOHIEM/numBAOHIEM;//gia dong cua trung binh ban buon
+tbopenBAOHIEM=iopenBAOHIEM/numBAOHIEM;// gia mo cua trung binh
+tbHightBAOHIEM=ihightBAOHIEM/numBAOHIEM;// gia dong cua trung binh
+tblowBAOHIEM=ilowBAOHIEM/numBAOHIEM;//gia thap trung binh
+tbvolBAOHIEM=ivolBAOHIEM/numBAOHIEM;//khoi luong trung binh
+
+tangBAOHIEM = Prec(ROC(tbBAOHIEM,1),3);
+tangdiemBAOHIEM = Prec(tbBAOHIEM - Ref(tbBAOHIEM,-1),3);
+tangvolBAOHIEM = Prec( ROC(tbvolBAOHIEM,1),3);
+ichangeBAOHIEM+=ROC(Foreign(symBAOHIEM,"Close"),1)/numBAOHIEM;
+No++;
+}
+_SECTION_END();
+TypeofPrice  = ParamList("Loai duong gia","Candle Stick,Bar Chart",0);
+switch(TypeofPrice)
+{
+   case "Candle Stick":
+PlotOHLC(tbopenBAOHIEM,tbHightBAOHIEM,tblowBAOHIEM,tbBAOHIEM,"",IIf(tbBAOHIEM>Ref(tbBAOHIEM,-1),colorCustom9,colorRed),styleCandle);
+      break; 
+   case "Bar Chart":
+		PlotOHLC(Null,tbHightBAOHIEM,tblowBAOHIEM,tbBAOHIEM,"",IIf(tbBAOHIEM>Ref(tbBAOHIEM,-1),colorCustom9,colorRed),styleBar);
+      break;
+      }
+_SECTION_BEGIN("Khoi Luong Trung Binh");
+messageboard = ParamToggle("Tat/mo Khoi luong TB","Hien|An",1);
+if (messageboard == 1 )
+{
+HPercent = Param("CHIEU CAO VOL", 10, 1, 100, 1);
+MAV = MA(tbvolBAOHIEM, Param("DUONG MAv", 20, 1, 100, 1));
+Vmax =  HighestVisibleValue(tbvolBAOHIEM)*100/HPercent;
+Vmin = LowestVisibleValue(tbvolBAOHIEM);
+Plot(tbvolBAOHIEM, "Volume", IIf( tbBAOHIEM > Ref(tbBAOHIEM,-1), ParamColor("Up Color", colorGreen ), ParamColor("Down Color", colorRed )), styleHistogram|styleOwnScale, Vmin, Vmax, 0, 0, 2);
+Plot(MAV, "MAV", colorWhite, styleLine|styleOwnScale, Vmin, Vmax, 0, 0, 2);
+}
+_SECTION_END();
+break;
+//ket thuc bao hiem
+
+//bat dau bds
+case "BATDONGSAN":
+BATDONGSAN=ParamStr("BAT DONG SAN","AGG,API,BAX,BCE,BCM,BII,CCL,CDC,CEO,CIG,CKG,CRE,D11,D2D,DIG,DRH,DTA,DXG,DXS,EVG,FDC,FIR,FLC,HAR,HDC,HDG,HLD,HPX,HQC,HU1,HUT,ICG,IDV,IJC,ITA,ITC,KBC,KDH,KHG,KOS,L14,LDG,LGL,LHG,NBB,NDN,NHA,NLG,NRC,NTL,NVL,PDR,PTL,PV2,PVL,PXI,QCG,RCL,SCR,SDU,SGR,SIC,SJS,SZB,SZC,SZL,TCH,TDC,TDH,TIG,TIP,TIX,TN1,VC3,VC7,VHM,VIC,VPH,VPI,VRC,VRE");
+_SECTION_BEGIN("BATDONGSAN");
+No=0;
+icloseBATDONGSAN=0;
+iopenBATDONGSAN=0;
+ihightBATDONGSAN=0;
+ilowBATDONGSAN = 0;
+ichangeBATDONGSAN=0;
+ivolBATDONGSAN=0;
+for( i = 0; ( symBATDONGSAN = StrExtract(BATDONGSAN,i ) ) != ""; i++ )
+{
+icloseBATDONGSAN+=Foreign(symBATDONGSAN,"Close");
+iopenBATDONGSAN+=Foreign(symBATDONGSAN,"Open");
+ihightBATDONGSAN+=Foreign(symBATDONGSAN,"Hight");
+ilowBATDONGSAN+=Foreign(symBATDONGSAN,"Low");
+ivolBATDONGSAN+=Foreign(symBATDONGSAN,"Volume");
+numBATDONGSAN=1+StrCount(BATDONGSAN,",");
+
+tbBATDONGSAN=icloseBATDONGSAN/numBATDONGSAN;//gia dong cua trung binh ban buon
+tbopenBATDONGSAN=iopenBATDONGSAN/numBATDONGSAN;// gia mo cua trung binh
+tbHightBATDONGSAN=ihightBATDONGSAN/numBATDONGSAN;// gia dong cua trung binh
+tblowBATDONGSAN=ilowBATDONGSAN/numBATDONGSAN;//gia thap trung binh
+tbvolBATDONGSAN=ivolBATDONGSAN/numBATDONGSAN;//khoi luong trung binh
+
+tangBATDONGSAN = Prec(ROC(tbBATDONGSAN,1),3);
+tangdiemBATDONGSAN = Prec(tbBATDONGSAN - Ref(tbBATDONGSAN,-1),3);
+tangvolBATDONGSAN = Prec( ROC(tbvolBATDONGSAN,1),3);
+ichangeBATDONGSAN+=ROC(Foreign(symBATDONGSAN,"Close"),1)/numBATDONGSAN;
+No++;
+}
+_SECTION_END();
+TypeofPrice  = ParamList("Loai duong gia","Candle Stick,Bar Chart",0);
+switch(TypeofPrice)
+{
+   case "Candle Stick":
+PlotOHLC(tbopenBATDONGSAN,tbHightBATDONGSAN,tblowBATDONGSAN,tbBATDONGSAN,"",IIf(tbBATDONGSAN>Ref(tbBATDONGSAN,-1),colorCustom9,colorRed),styleCandle);
+      break; 
+   case "Bar Chart":
+		PlotOHLC(Null,tbHightBATDONGSAN,tblowBATDONGSAN,tbBATDONGSAN,"",IIf(tbBATDONGSAN>Ref(tbBATDONGSAN,-1),colorCustom9,colorRed),styleBar);
+      break;
+      }
+_SECTION_BEGIN("Khoi Luong Trung Binh");
+messageboard = ParamToggle("Tat/mo Khoi luong TB","Hien|An",1);
+if (messageboard == 1 )
+{
+HPercent = Param("CHIEU CAO VOL", 10, 1, 100, 1);
+MAV = MA(tbvolBATDONGSAN, Param("DUONG MAv", 20, 1, 100, 1));
+Vmax =  HighestVisibleValue(tbvolBATDONGSAN)*100/HPercent;
+Vmin = LowestVisibleValue(tbvolBATDONGSAN);
+Plot(tbvolBATDONGSAN, "Volume", IIf( tbBATDONGSAN > Ref(tbBATDONGSAN,-1), ParamColor("Up Color", colorGreen ), ParamColor("Down Color", colorRed )), styleHistogram|styleOwnScale, Vmin, Vmax, 0, 0, 2);
+Plot(MAV, "MAV", colorWhite, styleLine|styleOwnScale, Vmin, Vmax, 0, 0, 2);
+}
+_SECTION_END();
+break;
+//ket thuc bds
+}
+      

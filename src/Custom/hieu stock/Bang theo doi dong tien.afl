@@ -1,0 +1,303 @@
+symbol_1 = "VNINDEX";
+symbol_2 = "VN30";
+symbol_3 = "HNXINDEX";
+symbol_4 = "HNX30";
+symbol_5 = "^LARGECAP";
+symbol_6 = "^MIDCAP";
+symbol_7 = "^SMALLCAP";
+symbol_8 = "^BDS";
+symbol_9 = "^XAYDUNG";
+symbol_10 = "^CAOSU";
+symbol_11 = "^CK";
+symbol_12 = "^NGANHANG";
+symbol_13 = "^CONGNGHE";
+symbol_14 = "^DAUKHI";
+symbol_15 = "^DICHVU";
+symbol_16 = "^DUOCPHAM";
+symbol_17 = "^GIAODUC";
+symbol_18 = "^HK";
+symbol_19 = "^KHOANGSAN";
+symbol_20 = "^NANGLUONG";
+symbol_21 = "^NHUA";
+symbol_22 = "^SXKD";
+symbol_23 = "^THEP";
+symbol_24 = "^THUCPHAM";
+symbol_25 = "^THUONGMAI";
+symbol_26 = "^THUYSAN";
+symbol_27 = "^VANTAI";
+symbol_28 = "^VLXD";
+symbol_29 = "^DTPT";
+symbol_30 = "^DTXD";
+
+symbolCount = 30;
+
+text_cellheight = 8;
+cellheight = 20;
+grid1_col1_cellwidth = 35;
+grid1_col2_cellwidth = 80;
+grid1_col3_cellwidth = 70;
+grid1_col4_cellwidth = 75;
+grid1_col5_cellwidth = 75;
+grid1_col6_cellwidth = 75;
+no_of_rows = 32;
+start_x = 0;
+start_y = 20;
+GfxSelectPen( colorBlue );
+for(i=1; i<=no_of_rows; i++) {
+	//first cell
+	GfxMoveTo( start_x, start_y + i * cellheight ); 
+	GfxLineTo( grid1_col1_cellwidth, start_y + i * cellheight );
+	//second cell
+	GfxMoveTo( grid1_col1_cellwidth, start_y + i * cellheight  ); 
+	GfxLineTo( (grid1_col1_cellwidth + grid1_col2_cellwidth), start_y + i * cellheight);
+	//third cell
+	GfxMoveTo( (grid1_col1_cellwidth + grid1_col2_cellwidth), start_y + i * cellheight); 
+	GfxLineTo( (grid1_col1_cellwidth + grid1_col2_cellwidth + grid1_col3_cellwidth), start_y + i * cellheight  );
+	//fourth cell
+	GfxMoveTo( (grid1_col1_cellwidth + grid1_col2_cellwidth + grid1_col3_cellwidth), start_y + i * cellheight);
+	GfxLineTo( (grid1_col1_cellwidth + grid1_col2_cellwidth + grid1_col3_cellwidth + grid1_col4_cellwidth), start_y + i * cellheight  );
+	//fifth cell
+	GfxMoveTo( (grid1_col1_cellwidth + grid1_col2_cellwidth + grid1_col3_cellwidth + grid1_col4_cellwidth), start_y + i * cellheight);
+	GfxLineTo( (grid1_col1_cellwidth + grid1_col2_cellwidth + grid1_col3_cellwidth + grid1_col4_cellwidth + grid1_col5_cellwidth), start_y + i * cellheight  );
+	//sixth cell
+	GfxMoveTo( (grid1_col1_cellwidth + grid1_col2_cellwidth + grid1_col3_cellwidth + grid1_col4_cellwidth + grid1_col5_cellwidth), start_y + i * cellheight);
+	GfxLineTo( (grid1_col1_cellwidth + grid1_col2_cellwidth + grid1_col3_cellwidth + grid1_col4_cellwidth + grid1_col5_cellwidth + grid1_col6_cellwidth), start_y + i * cellheight  );
+}
+//first vertical line
+GfxMoveTo( start_x, start_y + cellheight );
+GfxLineTo(start_x, start_y + cellheight*no_of_rows);
+//second vertical line
+GfxMoveTo( grid1_col1_cellwidth, start_y+cellheight );
+GfxLineTo(grid1_col1_cellwidth, start_y+cellheight*no_of_rows);
+//third vertical line
+GfxMoveTo( grid1_col1_cellwidth+grid1_col2_cellwidth, start_y+cellheight );
+GfxLineTo(grid1_col1_cellwidth+grid1_col2_cellwidth, start_y+cellheight*no_of_rows);
+//fourth vertical line
+GfxMoveTo( grid1_col1_cellwidth+grid1_col2_cellwidth+grid1_col3_cellwidth, start_y+cellheight );
+GfxLineTo(grid1_col1_cellwidth+grid1_col2_cellwidth+grid1_col3_cellwidth, start_y+cellheight*no_of_rows);
+//fifth vertical line
+GfxMoveTo( grid1_col1_cellwidth+grid1_col2_cellwidth+grid1_col3_cellwidth+grid1_col4_cellwidth, start_y+cellheight );
+GfxLineTo(grid1_col1_cellwidth+grid1_col2_cellwidth+grid1_col3_cellwidth+grid1_col4_cellwidth, start_y+cellheight*no_of_rows);
+//sixth vertical line
+GfxMoveTo( grid1_col1_cellwidth+grid1_col2_cellwidth+grid1_col3_cellwidth+grid1_col4_cellwidth+grid1_col5_cellwidth, start_y+cellheight );
+GfxLineTo(grid1_col1_cellwidth+grid1_col2_cellwidth+grid1_col3_cellwidth+grid1_col4_cellwidth+grid1_col5_cellwidth, start_y+cellheight*no_of_rows);
+//seventh vertical line
+GfxMoveTo( grid1_col1_cellwidth+grid1_col2_cellwidth+grid1_col3_cellwidth+grid1_col4_cellwidth+grid1_col5_cellwidth+grid1_col6_cellwidth, start_y+cellheight );
+GfxLineTo(grid1_col1_cellwidth+grid1_col2_cellwidth+grid1_col3_cellwidth+grid1_col4_cellwidth+grid1_col5_cellwidth+grid1_col6_cellwidth, start_y+cellheight*no_of_rows);
+
+// write header
+GfxSelectPen( colorBlue, 2 ); 
+GfxSelectSolidBrush( colorBlue ); 
+GfxRectangle(0, 20, grid1_col1_cellwidth+grid1_col2_cellwidth+grid1_col3_cellwidth+grid1_col4_cellwidth+grid1_col5_cellwidth+grid1_col6_cellwidth+1, 40);
+GfxSelectFont("Arial Black", 10, 800 ); 
+GfxSetBkColor(colorBlue);
+GfxSetTextColor(colorWhite);
+GfxSetTextAlign(6);
+GfxTextOut("DONG TIEN", (grid1_col1_cellwidth + grid1_col2_cellwidth+grid1_col3_cellwidth+grid1_col4_cellwidth+grid1_col5_cellwidth + grid1_col6_cellwidth)/2 , 22);
+
+// write lable
+//Column 1 : STT
+GfxSelectPen( colorGreen, 2 ); 
+GfxSelectSolidBrush( colorGreen );
+x1_C1R1 = 0;
+y1_C1R1 = start_y + 1 * cellheight;
+x2_C1R1 = grid1_col1_cellwidth;
+delta = 2;
+GfxRectangle(x1_C1R1 + delta, y1_C1R1 + delta, x2_C1R1, y1_C1R1 + cellheight);
+GfxSelectFont("Arial", text_cellheight, 500 ); 
+GfxSetBkColor(colorGreen);
+GfxSetTextColor(colorWhite);
+GfxSetTextAlign(6);
+GfxTextOut("STT", x1_C1R1 + x2_C1R1/2  , y1_C1R1 + (text_cellheight /2));
+
+//Column 2 : CHI SO
+GfxSelectPen( colorGreen, 2 ); 
+GfxSelectSolidBrush( colorGreen );
+x1_C2R1 = grid1_col1_cellwidth;
+y1_C2R1 = start_y + 1 * cellheight;
+x2_C2R1 = grid1_col1_cellwidth + grid1_col2_cellwidth;
+delta = 2;
+GfxRectangle(x1_C2R1 + delta, y1_C2R1 + delta, x2_C2R1, y1_C2R1 + cellheight);
+GfxSelectFont("Arial", text_cellheight, 500 ); 
+GfxSetBkColor(colorGreen);
+GfxSetTextColor(colorWhite);
+GfxSetTextAlign(6);
+GfxTextOut("CHI SO", x1_C2R1 + grid1_col2_cellwidth/2  , y1_C2R1 + (text_cellheight /2));
+
+//Column 3 : DIEM
+GfxSelectPen( colorGreen, 2 ); 
+GfxSelectSolidBrush( colorGreen );
+x1_C3R1 = x1_C2R1 + grid1_col2_cellwidth;
+y1_C3R1 = start_y + 1 * cellheight;
+x2_C3R1 = x1_C3R1 + grid1_col3_cellwidth;
+delta = 2;
+GfxRectangle(x1_C3R1 + delta, y1_C3R1 + delta, x2_C3R1, y1_C3R1 + cellheight);
+GfxSelectFont("Arial", text_cellheight, 500 ); 
+GfxSetBkColor(colorGreen);
+GfxSetTextColor(colorWhite);
+GfxSetTextAlign(6);
+GfxTextOut("DIEM", x1_C3R1 + grid1_col3_cellwidth/2  , y1_C3R1 + (text_cellheight /2));
+
+//Column 4 : TANG DIEM
+GfxSelectPen( colorGreen, 2 ); 
+GfxSelectSolidBrush( colorGreen );
+x1_C4R1 = x1_C3R1 + grid1_col3_cellwidth;
+y1_C4R1 = start_y + 1 * cellheight;
+x2_C4R1 = x1_C4R1 + grid1_col4_cellwidth;
+delta = 2;
+GfxRectangle(x1_C4R1 + delta, y1_C4R1 + delta, x2_C4R1, y1_C4R1 + cellheight);
+GfxSelectFont("Arial", text_cellheight, 500 ); 
+GfxSetBkColor(colorGreen);
+GfxSetTextColor(colorWhite);
+GfxSetTextAlign(6);
+GfxTextOut("TANG DIEM", x1_C4R1 + grid1_col4_cellwidth/2  , y1_C4R1 + (text_cellheight /2));
+
+//Column 5 : % TANG DIEM
+GfxSelectPen( colorGreen, 2 ); 
+GfxSelectSolidBrush( colorGreen );
+x1_C5R1 = x1_C4R1 + grid1_col4_cellwidth;
+y1_C5R1 = start_y + 1 * cellheight;
+x2_C5R1 = x1_C5R1 + grid1_col5_cellwidth;
+delta = 2;
+GfxRectangle(x1_C5R1 + delta, y1_C5R1 + delta, x2_C5R1, y1_C5R1 + cellheight);
+GfxSelectFont("Arial", text_cellheight, 500 ); 
+GfxSetBkColor(colorGreen);
+GfxSetTextColor(colorWhite);
+GfxSetTextAlign(6);
+GfxTextOut("% TANG DIEM", x1_C5R1 + grid1_col5_cellwidth/2  , y1_C5R1 + (text_cellheight /2));
+
+//Column 6 : % TANG VOL
+GfxSelectPen( colorGreen, 2 ); 
+GfxSelectSolidBrush( colorGreen );
+x1_C6R1 = x1_C5R1 + grid1_col5_cellwidth;
+y1_C6R1 = start_y + 1 * cellheight;
+x2_C6R1 = x1_C6R1 + grid1_col6_cellwidth;
+delta = 2;
+GfxRectangle(x1_C6R1 + delta, y1_C6R1 + delta, x2_C6R1, y1_C6R1 + cellheight);
+GfxSelectFont("Arial", text_cellheight, 500 ); 
+GfxSetBkColor(colorGreen);
+GfxSetTextColor(colorWhite);
+GfxSetTextAlign(6);
+GfxTextOut("% TANG Vol", x1_C6R1 + grid1_col6_cellwidth/2  , y1_C6R1 + (text_cellheight /2));
+
+//Column 1 : Add STT
+for(i = 1; i < no_of_rows -1; i++) {
+	//third cell
+	GfxSelectPen( colorBlack, 2 ); 
+	GfxSelectSolidBrush( colorBlack );
+	x1 = 0;
+	y1 = start_y + (1 + i) * cellheight;
+	x2 = grid1_col1_cellwidth;
+	delta = 2;
+	GfxRectangle(x1 + delta, y1 + delta, x2, y1 + cellheight);
+	GfxSelectFont("Arial", text_cellheight, 500 ); 
+	GfxSetBkColor(colorBlack);
+	GfxSetTextColor(colorWhite);
+	GfxSetTextAlign(6);
+	GfxTextOut(NumToStr(i, 1.0), x1 + grid1_col1_cellwidth/2  , y1 + (text_cellheight /2));
+}
+
+//Column 2 : Add "Chi so"
+for(i = 1; i <= symbolCount; i++) {
+	//third cell
+	GfxSelectPen( colorBlack, 2 ); 
+	GfxSelectSolidBrush( colorBlack );
+	x1 = grid1_col1_cellwidth;
+	y1 = start_y + (1 + i) * cellheight;
+	x2 = x1 + grid1_col2_cellwidth;
+	delta = 2;
+	GfxRectangle(x1 + delta, y1 + delta, x2, y1 + cellheight);
+	GfxSelectFont("Arial", text_cellheight, 500 ); 
+	GfxSetBkColor(colorBlack);
+	GfxSetTextColor(colorWhite);
+	GfxSetTextAlign(2);
+	GfxTextOut( VarGetText("symbol_" + i), x1 + grid1_col2_cellwidth -3  , y1 + (text_cellheight /2));
+}
+
+//Column 3 : Add "DIEM"
+for(i = 1; i <= symbolCount; i++) {
+	sym = VarGet("symbol_" + i);
+
+	//RestorePriceArrays(); 
+	SetForeign(sym);
+	//third cell
+	GfxSelectPen( colorBlack, 2 ); 
+	GfxSelectSolidBrush( colorBlack );
+	x1 = x1_C3R1;
+	y1 = start_y + (1 + i) * cellheight;
+	x2 = x1 + grid1_col3_cellwidth;
+	delta = 2;
+	GfxRectangle(x1 + delta, y1 + delta, x2, y1 + cellheight);
+	GfxSelectFont("Arial", text_cellheight, 500 ); 
+	GfxSetBkColor(colorBlack);
+	GfxSetTextColor(colorWhite);
+	GfxSetTextAlign(6);
+		CC=TimeFrameGetPrice("C",inDaily,0);
+	GfxTextOut(NumToStr(CC), x1 + grid1_col3_cellwidth/2  , y1 + (text_cellheight /2));
+
+}
+
+//Column 4 : Add "TANG DIEM"
+for(i = 1; i <= symbolCount; i++) {
+	sym = VarGet("symbol_" + i);
+	SetForeign(sym);
+	//third cell
+	GfxSelectPen( colorBlack, 2); 
+	GfxSelectSolidBrush( colorBlack );
+	x1 = x1_C4R1;
+	y1 = start_y + (1 + i) * cellheight;
+	x2 = x1 + grid1_col4_cellwidth;
+	delta = 2;
+	GfxRectangle(x1 + delta, y1 + delta, x2, y1 + cellheight);
+	GfxSelectFont("Arial", text_cellheight, 500 ); 
+	GfxSetBkColor(colorBlack);
+	GfxSetTextColor(colorWhite);
+	GfxSetTextAlign(6);
+	CC=TimeFrameGetPrice("C",inDaily,0);
+	YC=TimeFrameGetPrice("C",inDaily,-1);
+	DD = CC - YC;
+	GfxTextOut(NumToStr(DD), x1 + grid1_col4_cellwidth/2  , y1 + (text_cellheight /2));
+}
+
+//Column 5 : Add "% TANG DIEM"
+for(i = 1; i <= symbolCount; i++) {
+	sym = VarGet("symbol_" + i);
+	SetForeign(sym);
+	//third cell
+	GfxSelectPen( colorBlack, 2 ); 
+	GfxSelectSolidBrush( colorBlack );
+	x1 = x1_C5R1;
+	y1 = start_y + (1 + i) * cellheight;
+	x2 = x1 + grid1_col5_cellwidth;
+	delta = 2;
+	GfxRectangle(x1 + delta, y1 + delta, x2, y1 + cellheight);
+	GfxSelectFont("Arial", text_cellheight, 500 ); 
+	GfxSetBkColor(colorBlack);
+	GfxSetTextColor(colorWhite);
+	GfxSetTextAlign(6);
+	CC=TimeFrameGetPrice("C",inDaily,0);
+	YC=TimeFrameGetPrice("C",inDaily,-1);
+	DD = CC - YC;
+	xx = (DD/YC)*100;
+	GfxTextOut(NumToStr(xx), x1 + grid1_col5_cellwidth/2  , y1 + (text_cellheight /2));
+}
+
+//Column 6 : Add "% TANG Vol"
+for(i = 1; i <= symbolCount; i++) {
+	sym = VarGet("symbol_" + i);
+	SetForeign(sym);
+	//third cell
+	GfxSelectPen( colorBlack, 2 ); 
+	GfxSelectSolidBrush( colorBlack );
+	x1 = x1_C6R1;
+	y1 = start_y + (1 + i) * cellheight;
+	x2 = x1 + grid1_col6_cellwidth;
+	delta = 2;
+	GfxRectangle(x1 + delta, y1 + delta, x2, y1 + cellheight);
+	GfxSelectFont("Arial", text_cellheight, 500 ); 
+	GfxSetBkColor(colorBlack);
+	GfxSetTextColor(colorWhite);
+	GfxSetTextAlign(6);
+	GfxTextOut(NumToStr(((V[BarCount - 1] - V[BarCount - 2])/V[BarCount - 2]) * 100), x1 + grid1_col6_cellwidth/2  , y1 + (text_cellheight /2));
+}
+//RestorePriceArrays(); 

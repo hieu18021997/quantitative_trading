@@ -1,0 +1,32 @@
+Filter =
+C > 5
+AND C > 0.99 * MA(C,100)
+AND Ref(C,-180) > 5
+AND Ref(C,-90) > 5
+AND Ref(C,-26) > 5
+AND MA(V,50)> 50000
+AND Ref(V,-100) > 50000
+AND C*V > 5000000 //Gia tri giao dich
+AND MA(C,50) > 0.98 * MA(C,100) //Chu ky thang vs chu ky nam => danh theo nam => Chu ky dai han
+AND Ref(MA(C,100),-1) > 0.98 * Ref(MA(C,100),-40) // 2 thang, chi mua kenh len
+AND (
+        C >= HHV(Ref(H,-1),60)
+        AND V > 1.2 * MA(V,20)
+        AND MA(C,20) > 0.98 * MA(C,100)
+        AND MA(C,50) > 0.98 * MA(C,100)
+        AND Ref(MA(C,100),-1) > 0.99 * Ref(MA(C,100),-40)
+        AND HHV(Ref(C,-1),30) < HHV(Ref(H,-30),60)
+        AND ((C - Ref(C,-1))/Ref(C,-1))*100 > 3
+/*
+    OR (
+        C >= Ref(H,-1)
+        AND C >= Ref(H,-2)
+        AND C >= Ref(H,-3)
+        AND C >= Ref(H,-4)
+    )
+*/
+)
+;
+
+AddColumn(C,"Close");
+AddColumn(((C - Ref(C,-1))/Ref(C,-1))*100 ,"% Today");

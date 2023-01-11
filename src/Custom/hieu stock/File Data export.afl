@@ -1,0 +1,23 @@
+fname = Name() + ".txt"; // file name = symbol.txt
+fh = fopen( fname, "w" );
+if( fh ) 
+{ 
+  dt = DateTime();
+  for( i = 0; i < BarCount; i++ )
+  {
+    line = DateTimeToStr( dt[ i ] ) + "," +
+           Open[ i ] + "," +
+           High[ i ] + "," +
+           Low[ i ] + "," +
+           Close[ i ] + "," +
+           Volume[ i ] + "\n";
+           
+    fputs( line, fh );
+  }
+
+  fclose( fh );
+} 
+else 
+{ 
+   Error("ERROR: file can not be open"); 
+} 

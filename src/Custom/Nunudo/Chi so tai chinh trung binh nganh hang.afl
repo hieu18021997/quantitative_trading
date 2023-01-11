@@ -1,0 +1,56 @@
+BANBUON=ParamStr("BAN BUON","AAV,ABS,AMV,CVN,DBT,DGW,DXV,FID,HAI,HHS,HMC,JVC,KDM,KLF,MCF,MEL,PCT,PET,PLX,PMG,PSD,PSE,PSH,PTB,QBS,SGT,SHN,SMC,SRA,TDG,TLH,TNA,TNI,TSC,TTB,TTH,VKC,VMD,VPG,VTV");
+//===================== * SECTOR BAN BUON* ==============================
+
+_SECTION_BEGIN("BANBUON");
+No=0;
+icloseBANBUON=0;
+epsBANBUON=0;//eps
+tbepsBANBUON=0;
+sBANBUON=0;
+bBANBUON=0;
+pbBANBUON=0;
+peBANBUON=0;
+PSBANBUON=0;
+
+for( i = 0; ( symBANBUON = StrExtract(BANBUON,i ) ) != ""; i++ )
+{
+icloseBANBUON+=Foreign(symBANBUON,"Close");
+numBANBUON=1+StrCount(BANBUON,",");
+epsBANBUON+=GetFnDataForeign( "EPS",  symBANBUON );//tong eps
+tbepsBANBUON = epsBANBUON/numBANBUON;//EPS
+peBANBUON = icloseBANBUON/epsBANBUON;//p/e
+bBANBUON+=GetFnDataForeign( "BookValuePerShare", symBANBUON );//tong bp
+pbBANBUON = icloseBANBUON/bBANBUON;//p/b
+sBANBUON+=GetFnDataForeign( "SalesPerShare", symBANBUON );//tong salepershare
+PSBANBUON= icloseBANBUON/sBANBUON;//p/s
+No++;
+}
+_SECTION_END();
+_SECTION_BEGIN("Chi so tai chinh");
+messageboard = ParamToggle("Tat/mo CHI SO TAI CHINH VA SUC MANH","Hien|An",1);
+if (messageboard == 1 )
+{
+Hor=Param("Horizontal Position",20,1,1200,1);
+Ver=Param("Vertical Position",1,1,1,1);
+GfxSelectFont("Times New Roman", 12, 600, bold =True, underline = False, False );
+GfxTextOut("CHI SO TAI CHINH:", Hor+100, Ver+55 );
+GfxSetTextColor( ParamColor("Colorchisotaichinh",colorCustom6) );
+GfxSetBkMode( colorWhite );
+GfxTextOut("Gia tri P/E: " + Prec( (Close/GetFnData( "EPS" )),2), Hor+100, Ver+85 );
+GfxTextOut("Gia tri EPS: " + Prec( GetFnData( "EPS" ),2), Hor+100, Ver+105 );
+GfxTextOut("Gia tri P/S: " + Prec( Close / GetFnData( "SalesPerShare" ),2), Hor+100, Ver+125 );
+GfxTextOut("Gia tri P/B: " + Prec(  Close / GetFnData( "BookValuePerShare" ),2), Hor+100, Ver+145 );
+GfxTextOut("Gia tri So sach: " + Prec(  GetFnData( "BookValuePerShare" ),2), Hor+100, Ver+165 );
+GfxTextOut("Doanh thu tren 1 co phan: " + Prec(  GetFnData( "SalesPerShare" ),2), Hor+100, Ver+185 );
+GfxTextOut("Gia tri ROE: " + Prec(  GetFnData( "ReturnOnEquity" ),2), Hor+100, Ver+205 );
+GfxTextOut("Gia tri ROA: " + Prec(  GetFnData( "ReturnOnAssets" ),2), Hor+100, Ver+225 );
+GfxTextOut("Thi truong: " + MarketID(1), Hor+100, Ver+245 );
+GfxTextOut("Linh vuc: " + SectorID(1), Hor+100, Ver+265 );
+GfxTextOut("Nhom nganh: " + IcbID(1), Hor+100, Ver+285 );
+GfxTextOut("Nhom nganh: " + IcbID(1), Hor+100, Ver+285 );
+GfxTextOut("EPS NGANH BAN BUON: " + tbepsBANBUON, Hor+100, Ver+315 );
+GfxTextOut("PE NGANH BAN BUON: " + peBANBUON, Hor+100, Ver+345 );
+GfxTextOut("PB NGANH BAN BUON: " + pbBANBUON, Hor+100, Ver+375 );
+GfxTextOut("PS NGANH BAN BUON: " + PSBANBUON, Hor+100, Ver+405 );
+
+}

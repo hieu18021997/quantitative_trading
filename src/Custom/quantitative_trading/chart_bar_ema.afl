@@ -1,0 +1,60 @@
+_SECTION_BEGIN("Price");
+SetChartOptions(0,chartShowArrows|chartShowDates);
+_N(Title = StrFormat("{{NAME}} - {{INTERVAL}} {{DATE}}, Close %g (%.1f%%), Volume " +WriteVal( V, 1.0 ) +" {{VALUES}}", C, SelectedValue( ROC( C, 1 )) ));
+//Plot( C, "Close", ParamColor("Color", colorDefault ), styleNoTitle | ParamStyle("Style") | GetPriceStyle() ); 
+_SECTION_END();
+
+_SECTION_BEGIN("Price");
+BarColor=IIf(C>O,colorGreen,colorRed);
+PlotOHLC( Close,  High,  Low,  Close, "", BarColor,styleBar|styleCandle,0,0,0,0,3);
+_SECTION_END();
+
+//Buy = Cross(EMA(C,5),EMA(C,66));
+//Sell = Cross(EMA(C,66),EMA(C,5));
+
+mua =
+EMA(C,3) > EMA(C,9)
+//AND C > HHV(C,5)
+;
+ 
+
+ban =  
+EMA(C,3) < EMA(C,9)
+;
+
+ApplyStop(0,1,8,0);
+//Buy = mua;
+//Sell = ban;
+
+Buy = ExRem(mua,ban);
+Sell = ExRem(ban,mua);
+
+PlotShapes(IIf(Buy,shapeUpArrow,shapeNone),colorBlue, 0,Low,Offset=-15);
+PlotShapes(IIf(Sell,shapeDownArrow,shapeNone),colorBlack,0,High,Offset=-15);
+
+
+EMA_PARAM_STYPE = ParamStyle("Style", styleThick);
+
+_SECTION_BEGIN("EMA 3");
+P = ParamField("Price field",-1);
+Periods = Param("Periods", 3, 1, 300, 1 );
+Plot( EMA( P, 3 ), _DEFAULT_NAME(), ParamColor( "Color", colorBlue ), EMA_PARAM_STYPE ); 
+_SECTION_END();
+
+_SECTION_BEGIN("EMA 9");
+P = ParamField("Price field",-1);
+Periods = Param("Periods", 9, 1, 300, 1 );
+Plot( EMA( P, Periods ), _DEFAULT_NAME(), ParamColor( "Color", colorLightOrange ), EMA_PARAM_STYPE ); 
+_SECTION_END();
+
+_SECTION_BEGIN("EMA 20");
+P = ParamField("Price field",-1);
+Periods = Param("Periods", 20, 1, 300, 1 );
+Plot( EMA( P, Periods ), _DEFAULT_NAME(), ParamColor( "Color", colorRed ), EMA_PARAM_STYPE ); 
+_SECTION_END();
+
+_SECTION_BEGIN("EMA 50");
+P = ParamField("Price field",-1);
+Periods = Param("Periods", 50, 1, 300, 1 );
+Plot( EMA( P, Periods ), _DEFAULT_NAME(), ParamColor( "Color", colorBlack ), EMA_PARAM_STYPE ); 
+_SECTION_END();

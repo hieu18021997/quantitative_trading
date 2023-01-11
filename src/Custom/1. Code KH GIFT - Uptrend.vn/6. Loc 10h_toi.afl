@@ -1,0 +1,47 @@
+Filter = 
+(
+C>= 0.7*HHV(C,120)
+AND C>= 0.7*HHV(C,20)
+
+
+
+AND (C- Ref(C,-1))/Ref(C,-1)<= 0.03
+AND (Ref(C,-1)- Ref(C,-2))/Ref(C,-2)<= 0.03
+
+AND ( Ref(C,-2)-Ref(C,-1))/Ref(C,-1)<= 0.03
+
+AND ((C - Ref(C,-120))/Ref(C,-120))*100>= 10
+AND ((C - Ref(C,-20))/Ref(C,-20))*100>= 10
+AND C*V >= 3000000
+AND C>=5
+AND Ref(V,-1)>=100000
+AND Ref(V,-5)>=100000
+AND Ref(V,-10)>=100000
+)
+
+OR 
+
+( 
+HHV(C,5) <1.055* LLV(C,5)
+AND C * V >= 5000000 
+AND C*V < 500000000
+AND C>= (HHV(C,5)+LLV(C,5))/2
+
+AND MA(V,30)>=100000
+AND Ref(V,-5)>=100000
+AND Ref(V,-10)>=100000
+AND Ref(V,-20)>=100000
+AND RSI(14)>=40
+AND C>=5
+AND C>MA(C,30)
+)
+ ;
+
+
+AddColumn(((C - Ref(C,-120))/Ref(C,-120))*100 ,"% Tang gia 6 thang ");
+AddColumn(((C - Ref(C,-20))/Ref(C,-20))*100 ,"% Tang gia 1 thang ");
+AddColumn(C*V,"Gia tri GD ");
+AddColumn((HHV(C,120)-C)/C*100,"khoang cach dinh ");
+AddColumn(C,"Gia today");
+AddSummaryRows(16, 1.2,5);
+SetSortColumns( -5 ) ;

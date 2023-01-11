@@ -1,0 +1,22 @@
+_SECTION_BEGIN("RSI");
+SetChartOptions(0,0,chartGrid30|chartGrid70);
+periods = Param( "Periods", 15, 1, 200, 1 );
+Plot( RSI(periods), _DEFAULT_NAME(), ParamColor( "Color", colorCycle ), ParamStyle("Style")  );
+r = RSI(periods);
+PlotOHLC( r,r,50,r, "", IIf( r > 50, colorRed, colorGreen ), styleCloud | styleClipMinMax, 30, 58 ); 
+
+Plot(58,"base line",colorBlue,styleLine);
+
+
+Sell= Cross (58,r);
+Short = Cross (r,RSI(5));
+Buy= Cross (r,30);
+Cover = Cross (RSI(5),r);
+
+Filter=Buy OR Sell OR Short OR Cover;
+
+Buy=ExRem(Buy,Sell); Sell=ExRem(Sell,Buy); Short=ExRem(Short,Cover); Cover=ExRem(Cover,Short);
+AddColumn(Close,"Close");AddColumn(Volume,"Volume");AddColumn(RSI(periods),"RSI");AddColumn(RSI(5),"RSI(5)");AddColumn(Buy,"Buy"); AddColumn(Sell,"sell"); AddColumn(Short,"short"); AddColumn(Cover,"cover");
+
+_SECTION_END();
+_SECTION_END();

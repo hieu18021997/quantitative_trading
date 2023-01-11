@@ -1,0 +1,56 @@
+Filter =
+//Check Gia
+C > 5
+AND C > 0.99 * MA(C,100)
+AND Ref(C,-180) > 5
+AND Ref(C,-90) > 5
+AND Ref(C,-26) > 5
+// Check Volumne
+AND MA(V,50)> 50000
+AND Ref(V,-100) > 50000
+AND C*V > 5000000 //Gia tri giao dich
+AND MA(C,50) > 0.98 * MA(C,100) //Chu ky thang vs chu ky nam => danh theo nam => Chu ky dai han
+AND Ref(MA(C,100),-1) > 0.98 * Ref(MA(C,100),-40) // 2 thang, chi mua kenh len
+AND (C- HHV(H,60))*100 * (-1)/HHV(H,60) < 10
+;
+CountBar = 0;
+
+H1 = High[BarCount-1];
+L1 = Low[BarCount -1];
+
+for( i = 1; i < BarCount; i++ )
+{
+	if(High[BarCount - i] > H1){
+		H1 = High[BarCount - i];
+	}
+	if(Low[BarCount - i] < L1){
+		L1 = Low[BarCount - i];
+	}
+	
+	if(H1 < 1.07*L1){
+		CountBar++;
+	}else{
+		break;
+	}	
+};
+
+
+AddColumn(C,"Close");
+AddColumn(((C - Ref(C,-1))/Ref(C,-1))*100 ,"% Today");
+AddColumn((C- Ref(C,-5))*100/Ref(C,-5),"% Week");
+AddColumn((C- Ref(C,-24))*100/Ref(C,-24),"% Month");
+AddColumn((C- HHV(H,60))*100/HHV(H,60),"% Top"); // Cach dinh 3 thang
+AddColumn(V,"Volume");
+AddColumn(V*100/MA(V,20),"% Volume");
+AddColumn(C*V,"Value");
+AddColumn(CountBar,"BarSwing<7%");
+
+AddTextColumn(WriteIf(MA(C,9)>= MA(C,20),"Buy","Sell"),"Short");
+AddTextColumn(WriteIf(MA(C,20)>= MA(C,50),"Buy","Sell"),"Middle");
+AddTextColumn(WriteIf(MA(C,50)>= MA(C,100),"Buy","Sell"),"Long");
+AddColumn(GetFnData( "EPS" ),"EPS");
+AddTextColumn( MarketID( 1 ), "Market" );
+AddTextColumn( IndustryID( 1 ), "Industry" );
+AddTextColumn( SectorID( 1 ), "Sector" );
+
+

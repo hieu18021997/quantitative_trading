@@ -1,0 +1,23 @@
+
+
+
+Các cổ phiếu có tính chu kỳ, và ta cần phân loại cổ phiếu đang ở chu kỳ nào, giai đoạn nào, ngắn, trung, dài hạn ra sao.
+
+
+
+
+Hành trình của cổ phiếu.
+
+1. Danh sách các cổ phiếu thỏa mãn giao dịch (Giá > 5, Vol (MA > 100k), Loại cổ bo cung)
+2. Danh sách theo dõi
+3. Danh sách nắm giữ
+4. Danh sách giảm tỷ trọng (0->100%)
+
+
+
+- Do cổ phiếu thường hay chạy theo ngành, nên cần phân tích trạng thái ngành
+- VNINDEX muốn tăng hay giảm thì cần có ngành dẫn dắt, và dễ bị dấu bởi trụ neo chỉ số, nhưng mid cap bị bán sml
+
+
+
+- Các cổ phiếu cần vào danh sách nhóm ngành, ngành

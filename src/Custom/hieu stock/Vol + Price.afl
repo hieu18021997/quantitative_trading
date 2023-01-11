@@ -1,0 +1,18 @@
+Filter =
+
+C > 5
+AND Ref(C,-120) > 5
+AND Ref(C,-90) > 5
+AND Ref(C,-26) > 5
+AND MA(V,20) > 200000
+AND ((C - Ref(C,-1))/Ref(C,-1))*100 > 3
+AND V*100/MA(V,20) > 130
+;
+
+AddColumn(C,"Close");
+AddColumn(((C - Ref(C,-1))/Ref(C,-1))*100 ,"% Today");
+AddColumn(V,"Volume");
+AddColumn(V*100/MA(V,20),"% Volume");
+AddTextColumn( MarketID( 1 ), "Market" );
+AddTextColumn( IndustryID( 1 ), "Industry" );
+AddTextColumn( SectorID( 1 ), "Sector" );

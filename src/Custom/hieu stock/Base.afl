@@ -1,0 +1,88 @@
+Filter =
+//Check Gia
+C > 5
+//AND C > 0.99 * MA(C,100)
+AND Ref(C,-120) > 5
+AND Ref(C,-90) > 5
+AND Ref(C,-26) > 5
+// Check Volumne
+AND MA(V,20) > 200000
+//Check xu hướng
+//AND MA(V,20) > 0.98 * MA(C,50)
+AND MA(C,50) > 0.98 * MA(C,100) //Chu ky thang vs chu ky nam => danh theo nam => Chu ky dai han
+//AND Ref(MA(C,100),-1) > 0.98 * Ref(MA(C,100),-40) // 2 thang, chi mua kenh len
+;
+CountBar = 0;
+
+H1 = High[BarCount-1];
+L1 = Low[BarCount -1];
+
+for( i = 1; i < BarCount; i++ )
+{
+	if(High[BarCount - i] > H1){
+		H1 = High[BarCount - i];
+	}
+	if(Low[BarCount - i] < L1){
+		L1 = Low[BarCount - i];
+	}
+	
+	if(H1 < 1.07*L1){
+		CountBar++;
+	}else{
+		break;
+	}	
+};
+
+mua =
+
+C >= HHV(Ref(H,-1),60)
+AND V > 1.2 * MA(V,20)
+AND MA(C,20) > 0.98 * MA(C,100)
+AND MA(C,50) >= MA(C,100)
+AND Ref(MA(C,100),-1) > Ref(MA(C,100),-40)
+;
+ban =  
+C < LLV(Ref(L,-1),5)
+AND C < 0.99 * MA(C,20)
+AND V >= 0.8 * MA(V,20)
+
+;
+Buy = ExRem(mua,ban);
+//Sell = ExRem(ban,mua);
+
+AddColumn(C,"Close");
+AddColumn(((C - Ref(C,-1))/Ref(C,-1))*100 ,"% Today");
+AddColumn((C- Ref(C,-5))*100/Ref(C,-5),"% Week");
+AddColumn((C- Ref(C,-24))*100/Ref(C,-24),"% Month");
+AddColumn((C- HHV(H,60))*100/HHV(H,60),"% Top"); // Cach dinh 3 thang
+AddColumn(V,"Volume");
+AddColumn(V*100/MA(V,20),"% Volume");
+AddColumn(C*V,"Value");
+AddColumn(CountBar,"BarSwing<7%");
+
+AddTextColumn(WriteIf(MA(C,9)>= MA(C,20),"Buy","Sell"),"Short");
+AddTextColumn(WriteIf(MA(C,20)>= MA(C,50),"Buy","Sell"),"Middle");
+AddTextColumn(WriteIf(MA(C,50)>= MA(C,100),"Buy","Sell"),"Long");
+AddColumn(GetFnData( "EPS" ),"EPS");
+AddTextColumn( MarketID( 1 ), "Market" );
+AddTextColumn( IndustryID( 1 ), "Industry" );
+AddTextColumn( SectorID( 1 ), "Sector" );
+
+/*
+Cần phân theo midcap, langcap, smallcap
+Phân theo ngành nghề
+Để nhằm đánh giá dòng tiền đang chạy vào đâu
+
+Phân làm 2 loại
+1. Gần tới đỉnh, đã test đỉnh lần 1, đang loanh quanh đỉnh và đang tạo nền
+(Áp dụng vượt nền lớn)
+2. Xu hướng tăng, giảm xuống và đang tạo nền (nền rõ ràng, mập mờ dâu thì ko ưu tiên, điểm thấp)
+(Áp dụng đang trong xu hướng tăng)
+=> Chú ý cổ phiếu nên đã test lại, còn tăng hình chữ V thì điểm sẽ thấp hơn
+cổ phiếu có thể test lần 3,4
+
+=> Điểm mua chỉ mua tại nền và điểm chạy đầu tiên
+
+Những cổ phiếu trước khi sập mà có dấu hiệu tốt thì sau khi sập phải chú ý, vì rất dễ chạy điên
+*/
+
